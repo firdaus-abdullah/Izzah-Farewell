@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farewell Portal - Izzahani Hamka</title>
+    <style>
+        /* --- Global Styles & Variables --- */
+        :root {
+            --brand-red: #D32F2F;
+            --brand-yellow: #FDE68A;
+            --brand-yellow-hover: #FCD34D;
+            --brand-dark: #2D2D2D;
+            --brand-gray: #F4F4F4;
+            --text-main: #333333;
+            --text-light: #777777;
+            --border-color: #DDDDDD;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #FFFFFF;
+            color: var(--text-main);
+            font-size: 14px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* --- Login Page Styles --- */
+        #login-view {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            background-color: #FFFFFF;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Simulating the Duopharma geometric logo using CSS since we don't have the image */
+        .logo-shape {
+            width: 120px;
+            height: 120px;
+            background: conic-gradient(from 45deg, var(--brand-red) 0deg 90deg, transparent 90deg 180deg, var(--brand-red) 180deg 270deg, transparent 270deg 360deg);
+            margin: 0 auto 10px;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-shape::after {
+            content: '';
+            width: 80px;
+            height: 80px;
+            background-color: #FFFFFF;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: #111;
+        }
+
+        .system-info {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--text-light);
+            font-size: 12px;
+        }
+
+        .system-title {
+            color: #D97706;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .login-form {
+            width: 100%;
+            max-width: 400px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            /* box-shadow: 0 4px 12px rgba(0,0,0,0.05); */
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .input-icon-wrapper {
+            position: relative;
+        }
+
+        .input-icon-wrapper input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .input-icon-wrapper input:focus {
+            border-color: var(--brand-red);
+        }
+
+        .input-icon-wrapper i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-style: normal;
+        }
+
+        .forgot-password {
+            display: block;
+            text-align: left;
+            font-size: 12px;
+            color: #0284C7;
+            text-decoration: none;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+
+        .btn-login {
+            background-color: var(--brand-yellow);
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-login:hover {
+            background-color: var(--brand-yellow-hover);
+        }
+
+        /* --- Dashboard Styles --- */
+        #dashboard-view {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #F9FAFB;
+        }
+
+        /* Top Navbar */
+        .top-navbar {
+            background-color: #FFFFFF;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .top-navbar .brand {
+            color: #D97706;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .top-navbar .user-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .top-navbar .user-controls select {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 2px 5px;
+            font-size: 12px;
+        }
+
+        .top-navbar .icon-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .top-navbar .icon-group span {
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Main Navigation */
+        .main-nav {
+            background-color: var(--brand-dark);
+            color: #FFFFFF;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            font-size: 13px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .main-nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .main-nav-links a {
+            color: #CCCCCC;
+            text-decoration: none;
+            padding: 12px 0;
+            display: inline-block;
+            transition: color 0.3s;
+        }
+
+        .main-nav-links a:hover {
+            color: #FFFFFF;
+        }
+
+        .main-nav .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+        
+        .main-nav .user-profile span {
+            font-size: 14px;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Section Styles */
+        .content-section {
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            background-color: var(--brand-yellow);
+            padding: 10px 15px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-body {
+            padding: 15px;
+        }
+
+        /* List Items (for messages/notifications) */
+        .list-item {
+            display: flex;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid #EEEEEE;
+            align-items: flex-start;
+        }
+
+        .list-item:last-child {
+            border-bottom: none;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background-color: #E5E7EB;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #9CA3AF;
+            flex-shrink: 0;
+        }
+
+        .item-content {
+            flex: 1;
+        }
+
+        .item-title {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--brand-red);
+            margin-bottom: 4px;
+        }
+
+        .item-sub {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+
+        .item-desc {
+            font-size: 12px;
+            line-height: 1.4;
+            color: var(--text-main);
+        }
+
+        .badge {
+            background-color: var(--brand-red);
+            color: #fff;
+            border-radius: 10px;
+            padding: 2px 8px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+
+        /* Birthday / Cake Graphic placeholder */
+        .cake-graphic {
+            text-align: center;
+            font-size: 50px;
+            margin: 20px 0;
+        }
+
+        /* Footer Mobile Nav */
+        .mobile-footer {
+            display: none;
+            background: #fff;
+            border-top: 1px solid var(--border-color);
+            justify-content: space-around;
+            padding: 10px 0;
+            font-size: 20px;
+            color: var(--text-main);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-nav {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px;
+                gap: 10px;
+            }
+            .main-nav-links {
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+            .mobile-footer {
+                display: flex;
+            }
+            .main-content {
+                padding: 10px;
+                padding-bottom: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOGIN VIEW -->
+    <div id="login-view">
+        <div class="logo-container">
+            <div class="logo-shape"></div>
+            <div class="logo-text">DUOPHARMA</div>
+        </div>
+
+        <div class="system-info">
+            <div class="system-title">SandFil Talent Management</div>
+            <div>Right Talents, Right Results</div>
+            <div style="margin-top: 10px;">
+                Version : 11.25.006 <br>
+                Company : DUOPHARMA
+            </div>
+        </div>
+
+        <form class="login-form" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>Login ID :</label>
+                <div class="input-icon-wrapper">
+                    <i>👤</i>
+                    <input type="text" placeholder="Login ID" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Password :</label>
+                <div class="input-icon-wrapper">
+                    <i>🔑</i>
+                    <input type="password" placeholder="Password" required>
+                </div>
+            </div>
+            <a href="#" class="forgot-password">Forgot Password?</a>
+            <button type="submit" class="btn-login">Login</button>
+        </form>
+    </div>
+
+    <!-- DASHBOARD VIEW (Farewell Theme) -->
+    <div id="dashboard-view" class="hidden">
+        <!-- Top Navbar -->
+        <div class="top-navbar">
+            <div class="brand">DUOPHARMA</div>
+            <div class="user-controls">
+                <select>
+                    <option>Eng</option>
+                </select>
+                <div class="icon-group">
+                    <span>👤</span>
+                    <span>📅</span>
+                    <span>⚙️</span>
+                    <span onclick="handleLogout()" style="cursor:pointer;" title="Logout">⏻</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <div class="main-nav-links">
+                <a href="#">Performance ▾</a>
+                <a href="#">Training ▾</a>
+                <a href="#">Time Attendance ▾</a>
+                <a href="#">Leave ▾</a>
+                <a href="#">Intranet ▾</a>
+                <a href="#">Help ▾</a>
+            </div>
+            <div class="user-profile">
+                <span>👤</span>
+                IZZAHANI HAMKA
+                <span>🏠</span>
+                <span>🔒</span>
+                <span>💬</span>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+            <!-- Farewell Messages Section (Replaces New Joined Employee) -->
+            <section class="content-section">
+                <div class="section-header">
+                    💌 Farewell Wishes for Izzahani
+                </div>
+                <div class="section-body">
+                    <div class="list-item">
+                        <div class="avatar">👩‍💼</div>
+                        <div class="item-content">
+                            <div class="item-title">From: Aina Farhana</div>
+                            <div class="item-sub">DUOPHARMA (M) SDN BHD | Today</div>
+                            <div class="item-desc">"Wishing you all the best in your next chapter, Izzahani! It was a pleasure working with you."</div>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <div class="avatar">👨‍💼</div>
+                        <div class="item-content">
+                            <div class="item-title">From: Chong Woon Yee</div>
+                            <div class="item-sub">DUOPHARMA DISTRIBUTION SDN BHD | Yesterday</div>
+                            <div class="item-desc">"Thank you for your dedication and hard work. You will be missed by the whole team!"</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Notification Section (Repurposed for Journey/Memories) -->
+            <section class="content-section">
+                <div class="section-header">
+                    📸 Izzahani's Journey 
+                    <span class="badge">12</span>
+                </div>
+                <div class="section-body">
+                    <div class="list-item">
+                        <div class="avatar">🏆</div>
+                        <div class="item-content">
+                            <div class="item-title">Project Completion Milestone</div>
+                            <div class="item-sub">25 Sep 2026, 10:15 AM</div>
+                            <div class="item-desc">Successfully led the Q3 regional sales initiative.</div>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <div class="avatar">🤝</div>
+                        <div class="item-content">
+                            <div class="item-title">Team Building Event</div>
+                            <div class="item-sub">15 Aug 2026, 09:30 AM</div>
+                            <div class="item-desc">Organized the annual team retreat and bonding session.</div>
+                        </div>
+                    </div>
+                    <div class="list-item">
+                        <div class="avatar">🌟</div>
+                        <div class="item-content">
+                            <div class="item-title">Employee of the Month</div>
+                            <div class="item-sub">01 Jul 2026, 08:00 AM</div>
+                            <div class="item-desc">Recognized for outstanding contributions to the department.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Birthday Events Section (Repurposed for Final Message) -->
+            <section class="content-section">
+                <div class="section-header">
+                    🎂 A Note from the Team
+                </div>
+                <div class="section-body">
+                    <div class="cake-graphic">🌻</div>
+                    <div class="list-item" style="justify-content: center; text-align: center; border-bottom: none;">
+                        <div class="item-content">
+                            <div class="item-desc" style="font-size: 14px; font-style: italic;">
+                                "Don't cry because it's over. Smile because it happened." <br><br>
+                                Thank you for everything, Izzahani. We wish you great success and happiness in your future endeavors!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Mobile Footer Nav -->
+        <footer class="mobile-footer">
+            <span>🏠</span>
+            <span>🔖</span>
+            <span>🔍</span>
+            <span>📁</span>
+            <span>⋮</span>
+        </footer>
+    </div>
+
+    <!-- JavaScript for Login/Logout Logic -->
+    <script>
+        function handleLogin(event) {
+            event.preventDefault(); // Prevent form from reloading the page
+            
+            // Hide Login View and Show Dashboard
+            document.getElementById('login-view').classList.add('hidden');
+            document.getElementById('dashboard-view').classList.remove('hidden');
+            
+            // Scroll to top just in case
+            window.scrollTo(0, 0);
+        }
+
+        function handleLogout() {
+            // Revert back to Login View
+            document.getElementById('dashboard-view').classList.add('hidden');
+            document.getElementById('login-view').classList.remove('hidden');
+        }
+    </script>
+
+</body>
+  </html>
